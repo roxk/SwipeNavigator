@@ -1,0 +1,8 @@
+namespace SwipeNavigation
+{
+    [default_interface]
+    unsealed runtimeclass NavigationRequestedEventArgs
+    {
+        Boolean Handled;
+    }
+}

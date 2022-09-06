@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="SwipeNavigatorTest.OverlayTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SwipeNavigatorTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pd="using:SwipeNavigatorTest.Presentation.Display"
+    xmlns:s="using:SwipeNavigation"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel
+            Margin="20,0,20,0"
+            VerticalAlignment="Center"
+            Background="Azure">
+            <TextBlock Text="Test Page for IconMode.Overlay" />
+            <ToggleSwitch
+                IsOn="{x:Bind ShowSaveConfirmationDialog, Mode=TwoWay}"
+                OffContent="Let navigator handle navigation"
+                OnContent="Show Save Confirmation Dialog" />
+            <TextBlock
+                Margin="0,0,8,0"
+                VerticalAlignment="Center"
+                Text="Back Navigation Mode (Set by child page)" />
+            <RadioButton
+                Checked="RadioButton_Checked"
+                Content="Auto"
+                GroupName="backNavMode"
+                IsChecked="{x:Bind pd:NavigationModeDisplay.IsAutoVisible(Navigator.BackNavigationMode), Mode=OneWay}"
+                Tag="{x:Bind s:NavigationMode.Auto}" />
+            <RadioButton
+                Checked="RadioButton_Checked"
+                Content="Enabled"
+                GroupName="backNavMode"
+                IsChecked="{x:Bind pd:NavigationModeDisplay.IsEnabledVisible(Navigator.BackNavigationMode), Mode=OneWay}"
+                Tag="{x:Bind s:NavigationMode.Enabled}" />
+            <RadioButton
+                Checked="RadioButton_Checked"
+                Content="Disable"
+                GroupName="backNavMode"
+                IsChecked="{x:Bind pd:NavigationModeDisplay.IsDisabledVisible(Navigator.BackNavigationMode), Mode=OneWay}"
+                Tag="{x:Bind s:NavigationMode.Disabled}" />
+        </StackPanel>
+    </Grid>
+</Page>

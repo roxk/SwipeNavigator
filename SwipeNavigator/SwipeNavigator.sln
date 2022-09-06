@@ -1,0 +1,102 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwipeNavigator", "SwipeNavigator\SwipeNavigator.vcxproj", "{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeNavigatorTest", "SwipeNavigatorTest\SwipeNavigatorTest.csproj", "{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SwipeNavigatorTest.Shared", "SwipeNavigatorTest.Shared\SwipeNavigatorTest.Shared.shproj", "{DC122400-B7A2-4A35-B5AC-3A2C448B2773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeNavigatorTestNuget", "SwipeNavigatorTestNuget\SwipeNavigatorTestNuget.csproj", "{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|ARM.ActiveCfg = Debug|ARM
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|ARM.Build.0 = Debug|ARM
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|ARM64.Build.0 = Debug|ARM64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|x64.ActiveCfg = Debug|x64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|x64.Build.0 = Debug|x64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|x86.ActiveCfg = Debug|Win32
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Debug|x86.Build.0 = Debug|Win32
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|ARM.ActiveCfg = Release|ARM
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|ARM.Build.0 = Release|ARM
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|ARM64.ActiveCfg = Release|ARM64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|ARM64.Build.0 = Release|ARM64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|x64.ActiveCfg = Release|x64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|x64.Build.0 = Release|x64
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|x86.ActiveCfg = Release|Win32
+		{19D78F1E-8CD6-4941-B2B6-5EEF52C95337}.Release|x86.Build.0 = Release|Win32
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM.Build.0 = Debug|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM.Deploy.0 = Debug|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM64.Build.0 = Debug|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x64.ActiveCfg = Debug|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x64.Build.0 = Debug|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x64.Deploy.0 = Debug|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x86.ActiveCfg = Debug|x86
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x86.Build.0 = Debug|x86
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Debug|x86.Deploy.0 = Debug|x86
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM.ActiveCfg = Release|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM.Build.0 = Release|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM.Deploy.0 = Release|ARM
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM64.ActiveCfg = Release|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM64.Build.0 = Release|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|ARM64.Deploy.0 = Release|ARM64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x64.ActiveCfg = Release|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x64.Build.0 = Release|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x64.Deploy.0 = Release|x64
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x86.ActiveCfg = Release|x86
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x86.Build.0 = Release|x86
+		{85805AC0-F12C-4F3E-987A-7A459F9BD2A1}.Release|x86.Deploy.0 = Release|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM.Build.0 = Debug|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM.Deploy.0 = Debug|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM64.Build.0 = Debug|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x64.ActiveCfg = Debug|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x64.Build.0 = Debug|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x64.Deploy.0 = Debug|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x86.ActiveCfg = Debug|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x86.Build.0 = Debug|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Debug|x86.Deploy.0 = Debug|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM.ActiveCfg = Release|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM.Build.0 = Release|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM.Deploy.0 = Release|ARM
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM64.ActiveCfg = Release|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM64.Build.0 = Release|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|ARM64.Deploy.0 = Release|ARM64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x64.ActiveCfg = Release|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x64.Build.0 = Release|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x64.Deploy.0 = Release|x64
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x86.ActiveCfg = Release|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x86.Build.0 = Release|x86
+		{DBA7B7CC-D19C-49B5-A457-DB565D236FA7}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3F63E44-DD84-471C-911E-ACFB98A9BA97}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SwipeNavigatorTest.Shared\SwipeNavigatorTest.Shared.projitems*{85805ac0-f12c-4f3e-987a-7a459f9bd2a1}*SharedItemsImports = 4
+		SwipeNavigatorTest.Shared\SwipeNavigatorTest.Shared.projitems*{dba7b7cc-d19c-49b5-a457-db565d236fa7}*SharedItemsImports = 4
+		SwipeNavigatorTest.Shared\SwipeNavigatorTest.Shared.projitems*{dc122400-b7a2-4a35-b5ac-3a2c448b2773}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

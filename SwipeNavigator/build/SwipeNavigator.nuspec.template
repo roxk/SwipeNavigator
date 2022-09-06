@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>SwipeNavigation.SwipeNavigator</id>
+    <version>VERSION</version>
+    <title>SwipeNavigation.SwipeNavigator</title>
+    <authors>Roxk Yiu</authors>
+    <owners>Roxk Yiu</owners>
+    <description>This package provides control that allows developers to integrate swipe navigation easily.</description>
+    <copyright>Copyright 2022</copyright>
+    <tags>SwipeNavigtaor Swipe Navigator Gestures UWP Frame CanGoBack GoBack CanGoForward GoForward</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <projectUrl>https://github.com/roxk/SwipeNavigator</projectUrl>
+
+    <dependencies>
+      <dependency id="Microsoft.UI.Xaml" version="[2.8.1,)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\README.md"/>
+    <file src="..\..\LICENSE"/>
+
+	<!-- Ref: https://docs.microsoft.com/en-us/nuget/guides/create-uwp-packages -->
+	<!-- Note: Only WinRT stuff use namespace as file name, i.e. winmd and pri -->
+  <!-- Others use project name as file name -->
+    <file target="lib\uap10.0" src="..\SwipeNavigator\x64\Release\SwipeNavigator\SwipeNavigation.winmd"/>
+    <file target="lib\uap10.0" src="..\SwipeNavigator\x64\Release\SwipeNavigator\SwipeNavigator.xml"/>
+
+	<!-- Themes -->
+	<file target="lib\uap10.0\SwipeNavigation" src="..\SwipeNavigator\x64\Release\SwipeNavigator\SwipeNavigation\**\*.*"/>
+
+	<!-- Platform DLLs and resources -->
+	<file target="runtimes\win10-arm64\native\SwipeNavigation.dll" src="..\SwipeNavigator\ARM64\Release\SwipeNavigator\SwipeNavigator.dll" />
+	<file target="runtimes\win10-arm64\native" src="..\SwipeNavigator\ARM64\Release\SwipeNavigator\SwipeNavigation.pri" />
+	<file target="runtimes\win10-x64\native\SwipeNavigation.dll"   src="..\SwipeNavigator\x64\Release\SwipeNavigator\SwipeNavigator.dll" />
+	<file target="runtimes\win10-x64\native" src="..\SwipeNavigator\x64\Release\SwipeNavigator\SwipeNavigation.pri" />
+
+	<file target="build\native\SwipeNavigation.SwipeNavigator.targets" src="SwipeNavigator-Native.targets"/>
+  </files>
+</package>
