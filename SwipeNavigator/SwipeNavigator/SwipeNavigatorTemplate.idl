@@ -1,0 +1,8 @@
+namespace SwipeNavigation
+{
+    [default_interface]
+    runtimeclass SwipeNavigatorTemplate : Windows.UI.Xaml.ResourceDictionary
+    {
+        SwipeNavigatorTemplate();
+    }
+}

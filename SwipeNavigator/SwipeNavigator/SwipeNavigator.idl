@@ -1,0 +1,37 @@
+import "NavigationRequestedEventArgs.idl";
+
+namespace SwipeNavigation
+{
+    enum IconMode
+    {
+        BackDrop,
+        Overlay
+    };
+
+    enum NavigationMode
+    {
+        Auto,
+        Disabled,
+        Enabled
+    };
+
+    [default_interface]
+    unsealed runtimeclass SwipeNavigator : Windows.UI.Xaml.Controls.ContentControl
+    {
+        SwipeNavigator();
+        Windows.UI.Xaml.Controls.Frame Frame;
+        IconMode IconMode;
+        static Windows.UI.Xaml.DependencyProperty IconModeProperty{get;};
+        NavigationMode BackNavigationMode;
+        static Windows.UI.Xaml.DependencyProperty BackNavigationModeProperty{get;};
+        NavigationMode ForwardNavigationMode;
+        static Windows.UI.Xaml.DependencyProperty ForwardNavigationModeProperty{get;};
+        Double RevealWidth;
+        static Windows.UI.Xaml.DependencyProperty RevealWidthProperty{get;};
+        static Windows.UI.Xaml.Visibility BackDropIconVisibility(IconMode mode);
+        static Windows.UI.Xaml.Visibility OverlayIconVisibility(IconMode mode);
+        static SwipeNavigator Find(Windows.UI.Xaml.FrameworkElement element);
+        event Windows.Foundation.TypedEventHandler<SwipeNavigator, NavigationRequestedEventArgs> BackRequested;
+        event Windows.Foundation.TypedEventHandler<SwipeNavigator, NavigationRequestedEventArgs> ForwardRequested;
+    }
+}
