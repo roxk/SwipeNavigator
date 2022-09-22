@@ -1,8 +1,7 @@
 # Swipe Navigation Library for UWP
 
 [![nuget](https://img.shields.io/nuget/v/SwipeNavigation.SwipeNavigator)](https://www.nuget.org/packages/SwipeNavigation.SwipeNavigator)
-
-TODO: CI status badge here.
+[![CI](https://github.com/roxk/SwipeNavigator/actions/workflows/ci.yaml/badge.svg)](https://github.com/roxk/SwipeNavigator/actions/workflows/ci.yaml)
 
 A library for the long-awaited feature of swipe navigation. Built with beautiful composition animation and interaction tracker. It works with touch, but there is also system back event integration. Common key accelerators are also implemented:
 
