@@ -1,6 +1,6 @@
 # Swipe Navigation Library for UWP
 
-TODO: Version badge here.
+[![nuget](https://img.shields.io/nuget/v/SwipeNavigation.SwipeNavigator)](https://www.nuget.org/packages/SwipeNavigation.SwipeNavigator)
 
 TODO: CI status badge here.
 
