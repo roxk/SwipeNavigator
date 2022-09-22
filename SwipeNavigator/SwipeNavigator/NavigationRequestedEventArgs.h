@@ -10,6 +10,6 @@ namespace winrt::SwipeNavigation::implementation
         bool Handled() const { return mIsHandled; }
         void Handled(bool isHandled) { mIsHandled = isHandled; }
     private:
-        bool mIsHandled;
+        bool mIsHandled{};
     };
 }

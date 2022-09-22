@@ -77,6 +77,23 @@ namespace SwipeNavigatorTest
             }
         }
 
+        private void ScrollViewerTest_Click(object sender, RoutedEventArgs e)
+        {
+            var transitionInfo = new FrameNavigationOptions()
+            {
+                TransitionInfoOverride = new SlideNavigationTransitionInfo()
+                {
+                    Effect = SlideNavigationTransitionEffect.FromRight,
+                },
+                IsNavigationStackEnabled = true,
+            };
+            if (IconMode != IconMode.BackDrop)
+            {
+                return;
+            }
+            backDropFrame.NavigateToType(typeof(ScrollViewerTestPage), null, transitionInfo);
+        }
+
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var radio = sender as RadioButton;

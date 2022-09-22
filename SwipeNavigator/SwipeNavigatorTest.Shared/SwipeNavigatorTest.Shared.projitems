@@ -21,6 +21,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ScrollViewerTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BackdropTestPage.xaml.cs">
@@ -33,5 +37,8 @@
       <DependentUpon>OverlayTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Presentation\Display\NavigationModeDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScrollViewerTestPage.xaml.cs">
+      <DependentUpon>ScrollViewerTestPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

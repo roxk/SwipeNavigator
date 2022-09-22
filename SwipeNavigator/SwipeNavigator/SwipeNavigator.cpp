@@ -9,6 +9,10 @@ using namespace winrt;
 
 using namespace std::chrono_literals;
 
+constexpr auto propIsClosing = L"isClosing";
+constexpr auto propCanGoBack = L"canGoBack";
+constexpr auto propCanGoForward = L"canGoForward";
+
 template<typename T>
 T GetTemplatedChild(wuxc::Control const& control, std::wstring_view name)
 {
@@ -35,7 +39,7 @@ namespace winrt::SwipeNavigation::implementation
 		mTracker = tracker;
 		auto root = GetTemplatedChild<wux::FrameworkElement>(*this, L"root");
 		mRoot = root;
-		root.PointerPressed({ get_weak(), &SwipeNavigator::OnRootPointerPressed });
+		root.AddHandler(wux::UIElement::PointerPressedEvent(), box_value(wuxi::PointerEventHandler{ get_weak(), &SwipeNavigator::OnRootPointerPressed }), true);
 		auto rootVisual = wuxh::ElementCompositionPreview::GetElementVisual(root);
 		auto source = wuci::VisualInteractionSource::Create(rootVisual);
 		mSource = source;
@@ -153,6 +157,7 @@ namespace winrt::SwipeNavigation::implementation
 		anim.InsertKeyFrame(1.0f, { 0.0f, 0.0f, 0.0f }, easing);
 		anim.Duration(300ms);
 		tracker.TryUpdatePositionWithAnimation(anim);
+		mTracker.Properties().InsertBoolean(propIsClosing, true);
 	}
 	void SwipeNavigator::TryUnregisterFrameCallbacks()
 	{
@@ -205,12 +210,15 @@ namespace winrt::SwipeNavigation::implementation
 		CanGoBack(canGoBack);
 		CanGoForward(canGoForward);
 		source.PositionXSourceMode(canGoBack || canGoForward ? wuci::InteractionSourceMode::EnabledWithInertia : wuci::InteractionSourceMode::Disabled);
-		auto& tracker = mTracker;
-		if (tracker != nullptr)
+		if (mState == State::Idle)
 		{
-			auto properties = tracker.Properties();
-			properties.InsertBoolean(L"canGoBack", canGoBack);
-			properties.InsertBoolean(L"canGoForward", canGoForward);
+			auto& tracker = mTracker;
+			if (tracker != nullptr)
+			{
+				auto properties = tracker.Properties();
+				properties.InsertBoolean(propCanGoBack, CanGoBack());
+				properties.InsertBoolean(propCanGoForward, CanGoForward());
+			}
 		}
 	}
 	void SwipeNavigator::UpdateIconMode()
@@ -310,13 +318,18 @@ namespace winrt::SwipeNavigation::implementation
 		}
 	}
 	template<typename Func>
-	void implementation::SwipeNavigator::Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> &ev, Func&& navigate)
+	void implementation::SwipeNavigator::Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> &ev, bool canNavigate, Func&& navigate)
 	{
 		auto iconMode = IconMode();
 		// If we are in overlay mode, animate back to idle regardless of Handled
+		// Also, we want to animate overlay icon to idle regardless of canNavigate
 		if (iconMode == IconMode::Overlay)
 		{
 			Close();
+		}
+		if (!canNavigate)
+		{
+			return;
 		}
 		auto args{ make_self<NavigationRequestedEventArgs>() };
 		ev(*this, *args);
@@ -333,7 +346,7 @@ namespace winrt::SwipeNavigation::implementation
 	}
 	void implementation::SwipeNavigator::GoBack()
 	{
-		Navigate(mBackRequested, [this]()
+		Navigate(mBackRequested, CanGoBack(), [this]()
 			{
 				if (mFrame != nullptr)
 				{
@@ -346,7 +359,7 @@ namespace winrt::SwipeNavigation::implementation
 	}
 	void SwipeNavigator::GoForward()
 	{
-		Navigate(mForwardRequested, [this]()
+		Navigate(mForwardRequested, CanGoForward(), [this]()
 			{
 				if (mFrame != nullptr)
 				{
@@ -357,13 +370,21 @@ namespace winrt::SwipeNavigation::implementation
 				}
 			});
 	}
+	void SwipeNavigator::ResetTrackerProperties(wuc::CompositionPropertySet const& properties)
+	{
+		properties.InsertBoolean(propIsClosing, false);
+		properties.InsertBoolean(propCanGoBack, CanGoBack());
+		properties.InsertBoolean(propCanGoForward, CanGoForward());
+	}
 	void SwipeNavigator::OnLoaded(IInspectable const& sender, wux::RoutedEventArgs const& args)
 	{
-		if (mTracker == nullptr)
+		auto& tracker = mTracker;
+		if (tracker == nullptr)
 		{
 			return;
 		}
-		mTracker.TryUpdatePosition({ 0.0f, 0.0f, 0.0f });
+		tracker.TryUpdatePosition({ 0.0f, 0.0f, 0.0f });
+		ResetTrackerProperties(tracker.Properties());
 	}
 	void implementation::SwipeNavigator::OnSystemBackRequested(IInspectable const&, wu::Core::BackRequestedEventArgs const&)
 	{
@@ -470,6 +491,17 @@ namespace winrt::SwipeNavigation::implementation
 			: position == RevealWidth()
 			? State::Forward
 			: State::Back;
+		auto& tracker = mTracker;
+		if (tracker != nullptr)
+		{
+			auto properties = tracker.Properties();
+			auto isClosing = false;
+			properties.TryGetBoolean(propIsClosing, isClosing);
+			if (isClosing)
+			{
+				ResetTrackerProperties(properties);
+			}
+		}
 	}
 	void SwipeNavigator::InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args)
 	{
@@ -496,6 +528,7 @@ namespace winrt::SwipeNavigation::implementation
 	}
 	void SwipeNavigator::InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args)
 	{
+		mState = State::Idle;
 	}
 	void SwipeNavigator::RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args)
 	{

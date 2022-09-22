@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="SwipeNavigatorTest.ScrollViewerTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SwipeNavigatorTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:s="using:SwipeNavigation"
+    mc:Ignorable="d">
+    <s:SwipeNavigator Frame="{x:Bind Frame, Mode=OneWay}">
+        <Grid>
+            <ListView Grid.Row="1">
+                <x:String>Ensure can swipe back even though the content has a scroll viewer</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+                <x:String>Item</x:String>
+            </ListView>
+        </Grid>
+    </s:SwipeNavigator>
+</Page>

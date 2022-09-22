@@ -19,6 +19,10 @@
                 Background="Azure">
                 <TextBlock Text="Test Page for IconMode.Backdrop" />
                 <TextBlock Text="Test that the icon doesn't leak into content prematurely. Make sure clip is working." TextWrapping="Wrap" />
+                <ToggleSwitch
+                    IsOn="{x:Bind IsConfirmationShown, Mode=TwoWay}"
+                    OffContent="Don't show confirmation"
+                    OnContent="Show confirmation" />
                 <Slider
                     x:Name="widthSlider"
                     Maximum="700"

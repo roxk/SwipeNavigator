@@ -143,9 +143,10 @@ namespace winrt::SwipeNavigation::implementation
         void UpdateIconMode();
         void UpdateRevealWidth();
         template<typename Func>
-        void Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>>& event, Func&& navigate);
+        void Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>>& event, bool canNavigate, Func&& navigate);
         void GoBack();
         void GoForward();
+        void ResetTrackerProperties(wuc::CompositionPropertySet const& properties);
         void OnLoaded(IInspectable const& sender, wux::RoutedEventArgs const& args);
         void OnSystemBackRequested(IInspectable const& sender, wu::Core::BackRequestedEventArgs const& args);
         void OnRootPointerPressed(IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args);

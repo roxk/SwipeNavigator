@@ -28,6 +28,8 @@ namespace SwipeNavigatorTest
             this.InitializeComponent();
         }
 
+        public bool IsConfirmationShown { get; set; } = false;
+
         /// <summary>
         /// 
         /// </summary>
@@ -35,6 +37,10 @@ namespace SwipeNavigatorTest
         /// <returns>true if should navigate</returns>
         private async Task<bool> ShowConfirmationDialog(SwipeNavigation.NavigationRequestedEventArgs args)
         {
+            if (!IsConfirmationShown)
+            {
+                return false;
+            }
             args.Handled = true;
             var dialog = new ContentDialog()
             {
