@@ -40,6 +40,11 @@ namespace winrt::SwipeNavigation::implementation
 		auto root = GetTemplatedChild<wux::FrameworkElement>(*this, L"root");
 		mRoot = root;
 		root.AddHandler(wux::UIElement::PointerPressedEvent(), box_value(wuxi::PointerEventHandler{ get_weak(), &SwipeNavigator::OnRootPointerPressed }), true);
+		root.SizeChanged({ get_weak(), &SwipeNavigator::OnRootSizeChanged });
+		auto backDropClip = GetTemplatedChild<wuxm::RectangleGeometry>(*this, L"backDropClip");
+		mBackDropClip = backDropClip;
+		auto overlayClip = GetTemplatedChild<wuxm::RectangleGeometry>(*this, L"overlayClip");
+		mOverlayClip = overlayClip;
 		auto rootVisual = wuxh::ElementCompositionPreview::GetElementVisual(root);
 		auto source = wuci::VisualInteractionSource::Create(rootVisual);
 		mSource = source;
@@ -401,6 +406,18 @@ namespace winrt::SwipeNavigation::implementation
 			return;
 		}
 		mSource.TryRedirectForManipulation(args.GetCurrentPoint(mRoot));
+	}
+	void SwipeNavigator::OnRootSizeChanged(IInspectable const& sender, wux::SizeChangedEventArgs const& args)
+	{
+		auto setClip = [&](wuxm::RectangleGeometry const& clip)
+		{
+			if (clip != nullptr)
+			{
+				clip.Rect(wf::Rect{ {0.0f, 0.0f }, args.NewSize() });
+			}
+		};
+		setClip(mBackDropClip);
+		setClip(mOverlayClip);
 	}
 	wux::DependencyProperty SwipeNavigator::IconModeProperty()
 	{

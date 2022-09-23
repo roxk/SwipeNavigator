@@ -16,6 +16,9 @@
                 <ControlTemplate TargetType="local:SwipeNavigator">
                     <Grid x:Name="root" Background="Transparent">
                         <Grid Visibility="{x:Bind local:SwipeNavigator.BackDropIconVisibility(IconMode), Mode=OneWay}">
+                            <Grid.Clip>
+                                <RectangleGeometry x:Name="backDropClip" />
+                            </Grid.Clip>
                             <FontIcon
                                 x:Name="backIcon"
                                 FontSize="16"
@@ -41,6 +44,9 @@
                                 CornerRadius="{x:Bind CornerRadius}" />
                         </Border>
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Grid.Clip>
+                                <RectangleGeometry x:Name="overlayClip" />
+                            </Grid.Clip>
                             <Grid
                                 x:Name="overlayBackIcon"
                                 Width="48"

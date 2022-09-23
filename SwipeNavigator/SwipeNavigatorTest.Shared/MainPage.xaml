@@ -34,6 +34,7 @@
                     GroupName="IconMode"
                     Tag="{x:Bind s:IconMode.Overlay}" />
             </StackPanel>
+            <TextBlock Text="- Make sure overlay/backdrop back/forward icon is hidden when idle" />
             <StackPanel Orientation="Horizontal" Visibility="{x:Bind IsOverlayFrameVisible, Mode=OneWay}">
                 <TextBlock
                     Margin="0,0,8,0"
@@ -91,11 +92,13 @@
         <Frame
             x:Name="backDropFrame"
             Grid.Row="1"
+            Margin="50"
             Background="Red"
             Visibility="{x:Bind IsBackDropFrameVisible, Mode=OneWay}" />
         <s:SwipeNavigator
             x:Name="navigator"
             Grid.Row="1"
+            Margin="50"
             Frame="{x:Bind overlayFrame, Mode=OneWay}"
             IconMode="Overlay"
             RevealWidth="{x:Bind overlayRevealWidthSlider.Value, Mode=OneWay}"

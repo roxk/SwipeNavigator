@@ -124,6 +124,8 @@ namespace winrt::SwipeNavigation::implementation
         wuci::VisualInteractionSource mSource{ nullptr };
         wuci::InteractionTracker mTracker{ nullptr };
         wux::FrameworkElement mRoot{ nullptr };
+        wuxm::RectangleGeometry mBackDropClip{ nullptr };
+        wuxm::RectangleGeometry mOverlayClip{ nullptr };
         wuci::InteractionTrackerInertiaRestingValue mSnapToBack{ nullptr };
         wuci::InteractionTrackerInertiaRestingValue mSnapToForward{ nullptr };
         wuci::InteractionTrackerInertiaRestingValue mSnapToContent{ nullptr };
@@ -150,6 +152,7 @@ namespace winrt::SwipeNavigation::implementation
         void OnLoaded(IInspectable const& sender, wux::RoutedEventArgs const& args);
         void OnSystemBackRequested(IInspectable const& sender, wu::Core::BackRequestedEventArgs const& args);
         void OnRootPointerPressed(IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args);
+        void OnRootSizeChanged(IInspectable const& sender, wux::SizeChangedEventArgs const& args);
         wuxc::Frame mFrame;
         event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> mBackRequested;
         event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> mForwardRequested;

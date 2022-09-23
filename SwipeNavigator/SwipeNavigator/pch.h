@@ -10,6 +10,7 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.Interactions.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
@@ -30,5 +31,6 @@ namespace winrt
 	namespace wux = Windows::UI::Xaml;
 	namespace wuxi = Windows::UI::Xaml::Input;
 	namespace wuxc = Windows::UI::Xaml::Controls;
+	namespace wuxm = Windows::UI::Xaml::Media;
 	namespace wuxh = Windows::UI::Xaml::Hosting;
 }
