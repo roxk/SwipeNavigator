@@ -21,9 +21,27 @@ If you want to submit a PR, note that the code base should be structured so that
 
 ### Install the library
 
-TODO: Nuget install instruction.
+```powershell
+nuget install SwipeNavigation.SwipeNavigator
+```
 
 ## Examples
+
+Before we start, add `SwipeNavigatorTemplate` in the resources of your `App.xaml`.
+
+(You can also just add `Themes/Generic.xaml` as per convention)
+
+```xaml
+<Application <!-- omitted -->
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:s="using:SwipeNavigation">
+    <Application.Resources>
+        <muxc:XamlControlsResources>
+            <s:SwipeNavigatorTemplate />
+        </muxc:XamlControlsResources>
+    </Application.Resources>
+</Application>
+```
 
 ### Backdrop Icon Indicator
 
