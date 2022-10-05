@@ -77,6 +77,23 @@ namespace SwipeNavigatorTest
             }
         }
 
+        private void CloseTest_Click(object sender, RoutedEventArgs e)
+        {
+            var transitionInfo = new FrameNavigationOptions()
+            {
+                TransitionInfoOverride = new SlideNavigationTransitionInfo()
+                {
+                    Effect = SlideNavigationTransitionEffect.FromRight,
+                },
+                IsNavigationStackEnabled = true,
+            };
+            if (IconMode != IconMode.BackDrop)
+            {
+                return;
+            }
+            backDropFrame.NavigateToType(typeof(BackdropNotHandledAndCloseTestPage), null, transitionInfo);
+        }
+
         private void ScrollViewerTest_Click(object sender, RoutedEventArgs e)
         {
             var transitionInfo = new FrameNavigationOptions()

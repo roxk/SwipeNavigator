@@ -27,6 +27,8 @@ namespace SwipeNavigation
         NavigationMode ForwardNavigationMode;
         static Windows.UI.Xaml.DependencyProperty ForwardNavigationModeProperty{get;};
         Double RevealWidth;
+        void Close();
+        void Close(Boolean withAnimation);
         static Windows.UI.Xaml.DependencyProperty RevealWidthProperty{get;};
         static Windows.UI.Xaml.Visibility BackDropIconVisibility(IconMode mode);
         static Windows.UI.Xaml.Visibility OverlayIconVisibility(IconMode mode);

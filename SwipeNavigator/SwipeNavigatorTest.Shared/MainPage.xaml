@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel Padding="8">
             <Button Click="NextPage_Click" Content="Navigate to next page" />
+            <Button Click="CloseTest_Click" Content="Navigate to CloseTest" />
             <Button Click="ScrollViewerTest_Click" Content="Navigate to ScrollViewerTest" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock

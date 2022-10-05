@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="SwipeNavigatorTest.BackdropNotHandledAndCloseTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SwipeNavigatorTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:s="using:SwipeNavigation"
+    mc:Ignorable="d">
+    <s:SwipeNavigator
+        x:Name="swipeNavigator"
+        BackNavigationMode="Enabled"
+        BackRequested="SwipeNavigator_BackRequested"
+        ForwardRequested="SwipeNavigator_ForwardRequested">
+        <Grid>
+            <StackPanel
+                Margin="20,0,20,0"
+                VerticalAlignment="Center"
+                Background="Azure">
+                <TextBlock Text="Test Page for IconMode.Backdrop" />
+                <TextBlock Text="Test that the icon doesn't leak into content prematurely. Make sure clip is working." TextWrapping="Wrap" />
+                <ToggleSwitch
+                    IsOn="{x:Bind IsEventHandled, Mode=TwoWay}"
+                    OffContent="Don't handle NavigationRequestedEventArgs"
+                    OnContent="Handle NavigationRequestedEventArgs" />
+                <Button Click="OnClose" Content="Close" />
+                <Button Click="OnCloseWithAnim" Content="Close With Anim" />
+                <Button Click="OnBack" Content="Back" />
+                <Button Click="OnForward" Content="Forward" />
+            </StackPanel>
+        </Grid>
+    </s:SwipeNavigator>
+</Page>

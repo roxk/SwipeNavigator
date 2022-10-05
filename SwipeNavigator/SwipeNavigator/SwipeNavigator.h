@@ -120,6 +120,7 @@ namespace winrt::SwipeNavigation::implementation
         void InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args);
         void RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args);
         void ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args);
+        void Close(bool withAnimation = true);
     private:
         wuci::VisualInteractionSource mSource{ nullptr };
         wuci::InteractionTracker mTracker{ nullptr };
@@ -136,7 +137,6 @@ namespace winrt::SwipeNavigation::implementation
         static void OnBackNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
         static void OnForwardNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
         static void OnRevealWidthChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
-        void Close();
         void TryUnregisterFrameCallbacks();
         void OnFrameCanGoBackChanged(IInspectable const& sender, wux::DependencyProperty const& args);
         void OnFrameCanGoForwardChanged(IInspectable const& sender, wux::DependencyProperty const& args);

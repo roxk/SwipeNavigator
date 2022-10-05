@@ -148,22 +148,30 @@ namespace winrt::SwipeNavigation::implementation
 		}
 		instance->UpdateRevealWidth();
 	}
-	void SwipeNavigator::Close()
+	void SwipeNavigator::Close(bool withAnimation)
 	{
 		auto& tracker = mTracker;
 		if (tracker == nullptr)
 		{
 			return;
 		}
-		// Snap back the icon to idle position
-		auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*this).Compositor();
-		auto anim = compositor.CreateVector3KeyFrameAnimation();
-		auto easing = IconMode() == IconMode::Overlay ? compositor.CreateCubicBezierEasingFunction({ 1.0f, 0.78f }, { 1.0f, 1.0f })
-			: compositor.CreateCubicBezierEasingFunction({0.0f, 0.0f}, {0.0f, 1.0f});
-		anim.InsertKeyFrame(1.0f, { 0.0f, 0.0f, 0.0f }, easing);
-		anim.Duration(300ms);
-		tracker.TryUpdatePositionWithAnimation(anim);
-		mTracker.Properties().InsertBoolean(propIsClosing, true);
+		if (withAnimation)
+		{
+			// Snap back the icon to idle position
+			auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*this).Compositor();
+			auto anim = compositor.CreateVector3KeyFrameAnimation();
+			auto easing = IconMode() == IconMode::Overlay ? compositor.CreateCubicBezierEasingFunction({ 1.0f, 0.78f }, { 1.0f, 1.0f })
+				: compositor.CreateCubicBezierEasingFunction({ 0.0f, 0.0f }, { 0.0f, 1.0f });
+			anim.InsertKeyFrame(1.0f, { 0.0f, 0.0f, 0.0f }, easing);
+			anim.Duration(300ms);
+			tracker.TryUpdatePositionWithAnimation(anim);
+			tracker.Properties().InsertBoolean(propIsClosing, true);
+		}
+		else
+		{
+			tracker.TryUpdatePosition({});
+			tracker.Properties().InsertBoolean(propIsClosing, false);
+		}
 	}
 	void SwipeNavigator::TryUnregisterFrameCallbacks()
 	{
@@ -389,7 +397,7 @@ namespace winrt::SwipeNavigation::implementation
 		{
 			return;
 		}
-		tracker.TryUpdatePosition({ 0.0f, 0.0f, 0.0f });
+		tracker.TryUpdatePosition({});
 		ResetTrackerProperties(tracker.Properties());
 	}
 	void implementation::SwipeNavigator::OnSystemBackRequested(IInspectable const&, wu::Core::BackRequestedEventArgs const&)
