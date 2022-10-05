@@ -94,6 +94,7 @@ namespace winrt::SwipeNavigation::implementation
 		altLeft.Key(ws::VirtualKey::Left);
 		altLeft.Modifiers(ws::VirtualKeyModifiers::Menu);
 		KeyboardAccelerators().Append(altLeft);
+		KeyboardAcceleratorPlacementMode(wuxi::KeyboardAcceleratorPlacementMode::Hidden);
 		wu::Core::SystemNavigationManager::GetForCurrentView().BackRequested({ get_weak(), &SwipeNavigator::OnSystemBackRequested });
 	}
 	void SwipeNavigator::Frame(wuxc::Frame const& frame)
