@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "pch.h"
 #include "SwipeNavigatorTemplate.g.h"
 
 namespace winrt::SwipeNavigation::implementation

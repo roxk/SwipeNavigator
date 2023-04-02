@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+#include "pch.h"
 #include "NavigationRequestedEventArgs.h"
 #include "SwipeNavigator.g.h"
 #include <optional>
