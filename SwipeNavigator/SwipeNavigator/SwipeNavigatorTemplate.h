@@ -5,7 +5,10 @@
 
 namespace winrt::SwipeNavigation::implementation
 {
-    struct SwipeNavigatorTemplate : SwipeNavigatorTemplateT<SwipeNavigatorTemplate>
+    struct
+    [[clang::annotate("idlgen::attribute=default_interface")]]
+    [[clang::annotate("idlgen::extend=Windows.UI.Xaml.ResourceDictionary")]]
+    SwipeNavigatorTemplate : SwipeNavigatorTemplateT<SwipeNavigatorTemplate>
     {
         SwipeNavigatorTemplate();
     };

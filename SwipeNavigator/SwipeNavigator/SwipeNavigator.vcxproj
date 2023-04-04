@@ -18,7 +18,8 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
-    <IdlGenExclude>pch.h;SwipeNavigatorTemplate.h;SwipeNavigator.h;</IdlGenExclude>
+    <IdlGenExclude>
+    </IdlGenExclude>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -90,7 +91,7 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <DisableSpecificWarnings>4100;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;5030;</DisableSpecificWarnings>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
     </ClCompile>
   </ItemDefinitionGroup>

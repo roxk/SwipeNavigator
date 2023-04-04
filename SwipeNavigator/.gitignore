@@ -362,3 +362,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 build/.nuspec
+
+*.idl.bak
