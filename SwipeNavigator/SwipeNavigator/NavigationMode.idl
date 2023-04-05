@@ -1,0 +1,9 @@
+namespace SwipeNavigation
+{
+    enum NavigationMode
+    {
+        Auto,
+        Disabled,
+        Enabled
+    };
+}

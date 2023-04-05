@@ -1,0 +1,8 @@
+namespace SwipeNavigation
+{
+    enum IconMode
+    {
+        BackDrop,
+        Overlay
+    };
+}

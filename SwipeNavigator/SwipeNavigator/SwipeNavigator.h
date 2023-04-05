@@ -9,7 +9,10 @@
 //
 namespace winrt::SwipeNavigation::implementation
 {
-    struct SwipeNavigator : SwipeNavigatorT<SwipeNavigator, wuci::IInteractionTrackerOwner>
+    struct
+    [[clang::annotate("idlgen::import=IconMode.idl,NavigationMode.idl")]]
+    [[clang::annotate("idlgen::extend=Windows.UI.Xaml.Controls.ContentControl")]]
+    SwipeNavigator : SwipeNavigatorT<SwipeNavigator, wuci::IInteractionTrackerOwner>
     {
         enum class State
         {
@@ -115,6 +118,11 @@ namespace winrt::SwipeNavigation::implementation
         static Windows::UI::Xaml::Visibility BackDropIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::BackDrop ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
         static Windows::UI::Xaml::Visibility OverlayIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::Overlay ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
         static SwipeNavigation::SwipeNavigator Find(Windows::UI::Xaml::FrameworkElement const& element);
+        void Close() { Close(true); }
+        void Close(bool withAnimation);
+    private:
+        friend struct winrt::impl::produce<SwipeNavigator, wuci::IInteractionTrackerOwner>;
+        friend struct winrt::impl::produce<SwipeNavigator, wux::IUIElementOverrides8>;
         void OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const& args);
         void CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args);
         void IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args);
@@ -122,8 +130,6 @@ namespace winrt::SwipeNavigation::implementation
         void InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args);
         void RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args);
         void ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args);
-        void Close(bool withAnimation = true);
-    private:
         wuci::VisualInteractionSource mSource{ nullptr };
         wuci::InteractionTracker mTracker{ nullptr };
         wux::FrameworkElement mRoot{ nullptr };

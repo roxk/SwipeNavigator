@@ -139,6 +139,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="IconMode.idl" />
+    <Midl Include="NavigationMode.idl" />
     <Midl Include="NavigationRequestedEventArgs.idl">
       <SubType>Designer</SubType>
     </Midl>

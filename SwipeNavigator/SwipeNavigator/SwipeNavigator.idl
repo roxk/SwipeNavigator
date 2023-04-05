@@ -1,39 +1,31 @@
+import "IconMode.idl";
+import "NavigationMode.idl";
 import "NavigationRequestedEventArgs.idl";
-
 namespace SwipeNavigation
 {
-    enum IconMode
-    {
-        BackDrop,
-        Overlay
-    };
-
-    enum NavigationMode
-    {
-        Auto,
-        Disabled,
-        Enabled
-    };
-
-    [default_interface]
-    unsealed runtimeclass SwipeNavigator : Windows.UI.Xaml.Controls.ContentControl
-    {
-        SwipeNavigator();
-        Windows.UI.Xaml.Controls.Frame Frame;
-        IconMode IconMode;
-        static Windows.UI.Xaml.DependencyProperty IconModeProperty{get;};
-        NavigationMode BackNavigationMode;
-        static Windows.UI.Xaml.DependencyProperty BackNavigationModeProperty{get;};
-        NavigationMode ForwardNavigationMode;
-        static Windows.UI.Xaml.DependencyProperty ForwardNavigationModeProperty{get;};
-        Double RevealWidth;
-        void Close();
-        void Close(Boolean withAnimation);
-        static Windows.UI.Xaml.DependencyProperty RevealWidthProperty{get;};
-        static Windows.UI.Xaml.Visibility BackDropIconVisibility(IconMode mode);
-        static Windows.UI.Xaml.Visibility OverlayIconVisibility(IconMode mode);
-        static SwipeNavigator Find(Windows.UI.Xaml.FrameworkElement element);
-        event Windows.Foundation.TypedEventHandler<SwipeNavigator, NavigationRequestedEventArgs> BackRequested;
-        event Windows.Foundation.TypedEventHandler<SwipeNavigator, NavigationRequestedEventArgs> ForwardRequested;
-    }
+runtimeclass SwipeNavigator : Windows.UI.Xaml.Controls.ContentControl
+{
+SwipeNavigator();
+static Windows.UI.Xaml.Visibility BackDropIconVisibility(SwipeNavigation.IconMode mode);
+static Windows.UI.Xaml.DependencyProperty BackNavigationModeProperty{get;};
+SwipeNavigation.NavigationMode BackNavigationMode;
+static Windows.UI.Xaml.DependencyProperty CanGoBackProperty{get;};
+Boolean CanGoBack;
+static Windows.UI.Xaml.DependencyProperty CanGoForwardProperty{get;};
+Boolean CanGoForward;
+void Close();
+void Close(Boolean withAnimation);
+static SwipeNavigation.SwipeNavigator Find(Windows.UI.Xaml.FrameworkElement element);
+static Windows.UI.Xaml.DependencyProperty ForwardNavigationModeProperty{get;};
+SwipeNavigation.NavigationMode ForwardNavigationMode;
+Windows.UI.Xaml.Controls.Frame Frame;
+static Windows.UI.Xaml.DependencyProperty IconModeProperty{get;};
+SwipeNavigation.IconMode IconMode;
+void OnApplyTemplate();
+static Windows.UI.Xaml.Visibility OverlayIconVisibility(SwipeNavigation.IconMode mode);
+static Windows.UI.Xaml.DependencyProperty RevealWidthProperty{get;};
+Double RevealWidth;
+event Windows.Foundation.TypedEventHandler<SwipeNavigation.SwipeNavigator, SwipeNavigation.NavigationRequestedEventArgs> BackRequested;
+event Windows.Foundation.TypedEventHandler<SwipeNavigation.SwipeNavigator, SwipeNavigation.NavigationRequestedEventArgs> ForwardRequested;
+}
 }
