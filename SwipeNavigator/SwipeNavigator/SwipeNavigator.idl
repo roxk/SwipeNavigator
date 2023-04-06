@@ -21,7 +21,6 @@ SwipeNavigation.NavigationMode ForwardNavigationMode;
 Windows.UI.Xaml.Controls.Frame Frame;
 static Windows.UI.Xaml.DependencyProperty IconModeProperty{get;};
 SwipeNavigation.IconMode IconMode;
-void OnApplyTemplate();
 static Windows.UI.Xaml.Visibility OverlayIconVisibility(SwipeNavigation.IconMode mode);
 static Windows.UI.Xaml.DependencyProperty RevealWidthProperty{get;};
 Double RevealWidth;

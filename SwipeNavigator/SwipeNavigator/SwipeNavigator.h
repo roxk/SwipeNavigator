@@ -27,6 +27,7 @@ namespace winrt::SwipeNavigation::implementation
 
         SwipeNavigator();
         ~SwipeNavigator();
+        [[clang::annotate("idlgen::hide")]]
         void OnApplyTemplate();
         void Frame(Windows::UI::Xaml::Controls::Frame const& frame);
         Windows::UI::Xaml::Controls::Frame Frame()
@@ -120,16 +121,21 @@ namespace winrt::SwipeNavigation::implementation
         static SwipeNavigation::SwipeNavigator Find(Windows::UI::Xaml::FrameworkElement const& element);
         void Close() { Close(true); }
         void Close(bool withAnimation);
-    private:
-        friend struct winrt::impl::produce<SwipeNavigator, wuci::IInteractionTrackerOwner>;
-        friend struct winrt::impl::produce<SwipeNavigator, wux::IUIElementOverrides8>;
+        [[clang::annotate("idlgen::hide")]]
         void OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args);
+        [[clang::annotate("idlgen::hide")]]
         void ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args);
+    private:
         wuci::VisualInteractionSource mSource{ nullptr };
         wuci::InteractionTracker mTracker{ nullptr };
         wux::FrameworkElement mRoot{ nullptr };
