@@ -12,7 +12,7 @@ namespace winrt::SwipeNavigation::implementation
     struct
     [[clang::annotate("idlgen::import=IconMode.idl,NavigationMode.idl")]]
     [[clang::annotate("idlgen::extend=Windows.UI.Xaml.Controls.ContentControl")]]
-    SwipeNavigator : SwipeNavigatorT<SwipeNavigator, wuci::IInteractionTrackerOwner>
+    SwipeNavigator : SwipeNavigatorT<SwipeNavigator, wuci::IInteractionTrackerOwner>, idlgen::base<wuxc::ContentControl>
     {
         enum class State
         {
