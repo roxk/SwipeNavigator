@@ -22,6 +22,8 @@
   <ItemGroup>
     <Midl Include="SwipeNavigator.idl" />
     <Midl Include="NavigationRequestedEventArgs.idl" />
+    <Midl Include="IconMode.idl" />
+    <Midl Include="NavigationMode.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SwipeNavigator.def" />
