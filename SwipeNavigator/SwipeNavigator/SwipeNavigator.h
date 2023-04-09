@@ -29,11 +29,14 @@ namespace winrt::SwipeNavigation::implementation
         ~SwipeNavigator();
         [[clang::annotate("idlgen::hide")]]
         void OnApplyTemplate();
+        [[clang::annotate("idlgen::setter")]]
         void Frame(Windows::UI::Xaml::Controls::Frame const& frame);
+        [[clang::annotate("idlgen::getter")]]
         Windows::UI::Xaml::Controls::Frame Frame()
         {
             return mFrame;
         }
+        [[clang::annotate("idlgen::setter")]]
         void IconMode(SwipeNavigation::IconMode mode)
         {
             if (mode == IconMode())
@@ -42,10 +45,12 @@ namespace winrt::SwipeNavigation::implementation
             }
             SetValue(IconModeProperty(), box_value(mode));
         }
+        [[clang::annotate("idlgen::getter")]]
         SwipeNavigation::IconMode IconMode()
         {
             return unbox_value<SwipeNavigation::IconMode>(GetValue(IconModeProperty()));
         }
+        [[clang::annotate("idlgen::setter")]]
         void BackNavigationMode(SwipeNavigation::NavigationMode mode)
         {
             if (mode == BackNavigationMode())
@@ -54,10 +59,12 @@ namespace winrt::SwipeNavigation::implementation
             }
             SetValue(BackNavigationModeProperty(), box_value(mode));
         }
+        [[clang::annotate("idlgen::getter")]]
         SwipeNavigation::NavigationMode BackNavigationMode()
         {
             return unbox_value<SwipeNavigation::NavigationMode>(GetValue(BackNavigationModeProperty()));
         }
+        [[clang::annotate("idlgen::setter")]]
         void ForwardNavigationMode(SwipeNavigation::NavigationMode mode)
         {
             if (mode == ForwardNavigationMode())
@@ -66,30 +73,37 @@ namespace winrt::SwipeNavigation::implementation
             }
             SetValue(ForwardNavigationModeProperty(), box_value(mode));
         }
+        [[clang::annotate("idlgen::getter")]]
         SwipeNavigation::NavigationMode ForwardNavigationMode()
         {
             return unbox_value<SwipeNavigation::NavigationMode>(GetValue(ForwardNavigationModeProperty()));
         }
+        [[clang::annotate("idlgen::setter")]]
         void CanGoBack(bool can)
         {
             SetValue(CanGoBackProperty(), box_value(can));
         }
+        [[clang::annotate("idlgen::getter")]]
         bool CanGoBack()
         {
             return unbox_value<bool>(GetValue(CanGoBackProperty()));
         }
+        [[clang::annotate("idlgen::setter")]]
         void CanGoForward(bool can)
         {
             SetValue(CanGoForwardProperty(), box_value(can));
         }
+        [[clang::annotate("idlgen::getter")]]
         bool CanGoForward()
         {
             return unbox_value<bool>(GetValue(CanGoForwardProperty()));
         }
+        [[clang::annotate("idlgen::setter")]]
         void RevealWidth(double width)
         {
             SetValue(RevealWidthProperty(), box_value(width));
         }
+        [[clang::annotate("idlgen::getter")]]
         double RevealWidth()
         {
             return unbox_value<double>(GetValue(RevealWidthProperty()));
@@ -110,11 +124,17 @@ namespace winrt::SwipeNavigation::implementation
         {
             mForwardRequested.remove(token);
         }
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty IconModeProperty();
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty BackNavigationModeProperty();
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty ForwardNavigationModeProperty();
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty CanGoBackProperty();
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty CanGoForwardProperty();
+        [[clang::annotate("idlgen::getter")]]
         static Windows::UI::Xaml::DependencyProperty RevealWidthProperty();
         static Windows::UI::Xaml::Visibility BackDropIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::BackDrop ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
         static Windows::UI::Xaml::Visibility OverlayIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::Overlay ? wux::Visibility::Visible : wux::Visibility::Collapsed; }

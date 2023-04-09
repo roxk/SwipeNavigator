@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.props" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.props')" />
+  <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props')" />
   <Import Project="..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props')" />
   <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
@@ -168,7 +168,7 @@
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets')" />
     <Import Project="..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets')" />
-    <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.targets" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.targets')" />
+    <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -179,7 +179,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets'))" />
-    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.props'))" />
-    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.3\build\native\IdlGen.IdlGen.Cpp.targets'))" />
+    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props'))" />
+    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets'))" />
   </Target>
 </Project>
