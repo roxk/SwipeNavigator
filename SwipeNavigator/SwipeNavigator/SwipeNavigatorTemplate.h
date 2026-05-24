@@ -1,21 +1,13 @@
 ﻿#pragma once
 
-#include "pch.h"
-#include "SwipeNavigatorTemplate.g.h"
+#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/author/base.h>
+#include <functional>
+#include "ns.h"
 
-namespace winrt::SwipeNavigation::implementation
+namespace winrt::SwipeNavigation::author
 {
-    struct
-    [[clang::annotate("idlgen::attribute=default_interface")]]
-    SwipeNavigatorTemplate : SwipeNavigatorTemplateT<SwipeNavigatorTemplate>, idlgen::base<wux::ResourceDictionary>
-    {
-        SwipeNavigatorTemplate();
-    };
-}
-
-namespace winrt::SwipeNavigation::factory_implementation
-{
-    struct SwipeNavigatorTemplate : SwipeNavigatorTemplateT<SwipeNavigatorTemplate, implementation::SwipeNavigatorTemplate>
+    struct SwipeNavigatorTemplate : winrt::author::runtimeclass<wux::ResourceDictionary>
     {
     };
 }

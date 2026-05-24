@@ -1,7 +1,0 @@
-namespace SwipeNavigation
-{
-runtimeclass NavigationRequestedEventArgs
-{
-Boolean Handled;
-}
-}

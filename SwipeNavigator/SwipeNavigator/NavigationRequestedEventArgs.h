@@ -1,16 +1,18 @@
 ﻿#pragma once
 
-#include "pch.h"
-#include "NavigationRequestedEventArgs.g.h"
+#include <winrt/author/base.h>
 
-namespace winrt::SwipeNavigation::implementation
+namespace winrt::SwipeNavigation::author
 {
-    struct NavigationRequestedEventArgs : NavigationRequestedEventArgsT<NavigationRequestedEventArgs>
+    struct NavigationRequestedEventArgs : winrt::author::runtimeclass<>
     {
-        [[clang::annotate("idlgen::getter")]]
-        bool Handled() const { return mIsHandled; }
-        [[clang::annotate("idlgen::setter")]]
-        void Handled(bool isHandled) { mIsHandled = isHandled; }
+        bool Handled(winrt::author::getter = {}) const { return mIsHandled; }
+        winrt::author::setter Handled(bool isHandled)
+        {
+            mIsHandled = isHandled;
+            return {};
+        }
+        NavigationRequestedEventArgs(winrt::author::ignore = {}) {}
     private:
         bool mIsHandled{};
     };

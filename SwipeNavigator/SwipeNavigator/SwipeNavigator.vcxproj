@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props')" />
-  <Import Project="..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props')" />
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.props" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.props')" />
+  <Import Project="..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.props" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -16,10 +16,11 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
-    <IdlGenCppExclude>
-    </IdlGenCppExclude>
+    <IdlGenCppExclude>App.h;pch.h</IdlGenCppExclude>
+    <IdlGenCppInclude>
+    </IdlGenCppInclude>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -93,6 +94,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;5030;</DisableSpecificWarnings>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -108,47 +110,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="NavigationRequestedEventArgs.h">
-      <DependentUpon>NavigationRequestedEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
+    <ClInclude Include="NavigationRequestedEventArgs.h" />
+    <ClInclude Include="ns.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SwipeNavigator.h">
-      <DependentUpon>SwipeNavigator.idl</DependentUpon>
-    </ClInclude>
+    <ClInclude Include="SwipeNavigator.h" />
     <ClInclude Include="SwipeNavigatorTemplate.h">
       <DependentUpon>SwipeNavigatorTemplate.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NavigationRequestedEventArgs.cpp">
-      <DependentUpon>NavigationRequestedEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
+    <ClCompile Include="Generated Files\module.g.cpp" />
+    <ClCompile Include="NavigationRequestedEventArgs.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SwipeNavigator.cpp">
-      <DependentUpon>SwipeNavigator.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="SwipeNavigatorTemplate.cpp">
-      <DependentUpon>SwipeNavigatorTemplate.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="IconMode.idl" />
-    <Midl Include="NavigationMode.idl" />
-    <Midl Include="NavigationRequestedEventArgs.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="SwipeNavigator.idl" />
-    <Midl Include="SwipeNavigatorTemplate.idl">
-      <DependentUpon>SwipeNavigatorTemplate.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
+    <ClCompile Include="SwipeNavigator.cpp" />
+    <ClCompile Include="SwipeNavigatorTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -165,21 +143,21 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets')" />
-    <Import Project="..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets')" />
-    <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3967.48\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3967.48\build\native\Microsoft.Web.WebView2.targets')" />
+    <Import Project="..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.targets" Condition="Exists('..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.1264.42\build\native\Microsoft.Web.WebView2.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.1\build\native\Microsoft.UI.Xaml.targets'))" />
-    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.props'))" />
-    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.1.4\build\native\IdlGen.IdlGen.Cpp.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3967.48\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3967.48\build\native\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.7\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.props'))" />
+    <Error Condition="!Exists('..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IdlGen.IdlGen.Cpp.0.2.14\build\native\IdlGen.IdlGen.Cpp.targets'))" />
   </Target>
 </Project>

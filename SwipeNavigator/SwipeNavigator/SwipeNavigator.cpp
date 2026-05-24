@@ -1,7 +1,8 @@
 ﻿#include "pch.h"
+#include "Generated Files/idlgen.impl.h"
 #include "SwipeNavigator.h"
-#include "SwipeNavigator.g.cpp"
-
+#include <winrt/SwipeNavigation.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <chrono>
 #include <algorithm>
 
@@ -14,36 +15,42 @@ constexpr auto propCanGoBack = L"canGoBack";
 constexpr auto propCanGoForward = L"canGoForward";
 
 template<typename T>
-T GetTemplatedChild(wuxc::Control const& control, std::wstring_view name)
+T GetTemplatedChild(wuxc::IControlProtected const& control, std::wstring_view name)
 {
 	auto child = control.GetTemplateChild(name);
 	if (child == nullptr) return nullptr;
 	return child.try_as<T>();
 }
 
-namespace winrt::SwipeNavigation::implementation
+namespace winrt::SwipeNavigation::author
 {
 	SwipeNavigator::SwipeNavigator()
 	{
-		DefaultStyleKey(winrt::box_value(xaml_typename<SwipeNavigation::SwipeNavigator>().Name));
-		Loaded({ get_weak(), &SwipeNavigator::OnLoaded });
 	}
 	SwipeNavigator::~SwipeNavigator()
 	{
 		TryUnregisterFrameCallbacks();
 	}
-	void SwipeNavigator::OnApplyTemplate()
+	void SwipeNavigator::InitializeComponent(winrt::author::ignore)
 	{
-		auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*this).Compositor();
-		auto tracker = wuci::InteractionTracker::CreateWithOwner(compositor, *this);
+		auto impl = self(this);
+		impl->DefaultStyleKey(winrt::box_value(xaml_typename<SwipeNavigation::SwipeNavigator>().Name));
+		impl->Loaded({ impl->get_weak(), &SwipeNavigator::OnLoaded });
+	}
+	void SwipeNavigator::OnApplyTemplate(winrt::author::override)
+	{
+		auto impl = self(this);
+		auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*impl).Compositor();
+		auto tracker = wuci::InteractionTracker::CreateWithOwner(compositor, *impl);
 		mTracker = tracker;
-		auto root = GetTemplatedChild<wux::FrameworkElement>(*this, L"root");
+		auto root = GetTemplatedChild<wux::FrameworkElement>(*impl, L"root");
 		mRoot = root;
-		root.AddHandler(wux::UIElement::PointerPressedEvent(), box_value(wuxi::PointerEventHandler{ get_weak(), &SwipeNavigator::OnRootPointerPressed }), true);
-		root.SizeChanged({ get_weak(), &SwipeNavigator::OnRootSizeChanged });
-		auto backDropClip = GetTemplatedChild<wuxm::RectangleGeometry>(*this, L"backDropClip");
+		auto uiElement = impl->try_as<wux::UIElement>();
+		root.AddHandler(wux::UIElement::PointerPressedEvent(), box_value(wuxi::PointerEventHandler{ impl, &SwipeNavigator::OnRootPointerPressed }), true);
+		root.SizeChanged({ impl->get_weak(), &SwipeNavigator::OnRootSizeChanged });
+		auto backDropClip = GetTemplatedChild<wuxm::RectangleGeometry>(*impl, L"backDropClip");
 		mBackDropClip = backDropClip;
-		auto overlayClip = GetTemplatedChild<wuxm::RectangleGeometry>(*this, L"overlayClip");
+		auto overlayClip = GetTemplatedChild<wuxm::RectangleGeometry>(*impl, L"overlayClip");
 		mOverlayClip = overlayClip;
 		auto rootVisual = wuxh::ElementCompositionPreview::GetElementVisual(root);
 		auto source = wuci::VisualInteractionSource::Create(rootVisual);
@@ -57,18 +64,18 @@ namespace winrt::SwipeNavigation::implementation
 		mSnapToForward = wuci::InteractionTrackerInertiaRestingValue::Create(compositor);
 		mSnapToContent = wuci::InteractionTrackerInertiaRestingValue::Create(compositor);
 		// Anim
-		auto content = GetTemplatedChild<wux::UIElement>(*this, L"content");
+		auto content = GetTemplatedChild<wux::UIElement>(*impl, L"content");
 		auto contentVisual = wuxh::ElementCompositionPreview::GetElementVisual(content);
 		// Virtual content visual is used as an intermediate variable for overlay animation.
 		auto virtualContentVisual = compositor.CreateSpriteVisual();
 		wuxh::ElementCompositionPreview::SetElementChildVisual(content, virtualContentVisual);
-		auto backIcon = GetTemplatedChild<wux::UIElement>(*this, L"backIcon");
+		auto backIcon = GetTemplatedChild<wux::UIElement>(*impl, L"backIcon");
 		auto backIconVisual = wuxh::ElementCompositionPreview::GetElementVisual(backIcon);
 		auto backIconAnim = compositor.CreateExpressionAnimation(L"(content.Offset.X - backIcon.Size.X) * 0.5");
 		backIconAnim.SetReferenceParameter(L"content", contentVisual);
 		backIconAnim.SetReferenceParameter(L"backIcon", backIconVisual);
 		backIconVisual.StartAnimation(L"Offset.X", backIconAnim);
-		auto forwardIcon = GetTemplatedChild<wux::UIElement>(*this, L"forwardIcon");
+		auto forwardIcon = GetTemplatedChild<wux::UIElement>(*impl, L"forwardIcon");
 		auto forwardIconVisual = wuxh::ElementCompositionPreview::GetElementVisual(forwardIcon);
 		auto forwardIconAnim = compositor.CreateExpressionAnimation(L"content.Size.X + ((content.Offset.X - forwardIcon.Size.X) * 0.5)");
 		forwardIconAnim.SetReferenceParameter(L"content", contentVisual);
@@ -93,20 +100,108 @@ namespace winrt::SwipeNavigation::implementation
 		wuxi::KeyboardAccelerator altLeft;
 		altLeft.Key(ws::VirtualKey::Left);
 		altLeft.Modifiers(ws::VirtualKeyModifiers::Menu);
-		KeyboardAccelerators().Append(altLeft);
-		KeyboardAcceleratorPlacementMode(wuxi::KeyboardAcceleratorPlacementMode::Hidden);
-		wu::Core::SystemNavigationManager::GetForCurrentView().BackRequested({ get_weak(), &SwipeNavigator::OnSystemBackRequested });
+		impl->KeyboardAccelerators().Append(altLeft);
+		impl->KeyboardAcceleratorPlacementMode(wuxi::KeyboardAcceleratorPlacementMode::Hidden);
+		wu::Core::SystemNavigationManager::GetForCurrentView().BackRequested({ self(this)->get_weak(), &SwipeNavigator::OnSystemBackRequested });
 	}
-	void SwipeNavigator::Frame(wuxc::Frame const& frame)
+	winrt::author::setter SwipeNavigator::Frame(wuxc::Frame const& frame)
 	{
 		TryUnregisterFrameCallbacks();
 		mFrame = frame;
-		mFrameCanGoBackToken = frame.RegisterPropertyChangedCallback(wuxc::Frame::CanGoBackProperty(), { get_weak(), &SwipeNavigator::OnFrameCanGoBackChanged });
-		mFrameCanGoForwardToken = frame.RegisterPropertyChangedCallback(wuxc::Frame::CanGoForwardProperty(), { get_weak(), &SwipeNavigator::OnFrameCanGoForwardChanged });
+		auto impl = self(this);
+		mFrameCanGoBackToken = frame.RegisterPropertyChangedCallback(wuxc::Frame::CanGoBackProperty(), { impl->get_weak(), &SwipeNavigator::OnFrameCanGoBackChanged });
+		mFrameCanGoForwardToken = frame.RegisterPropertyChangedCallback(wuxc::Frame::CanGoForwardProperty(), { impl->get_weak(), &SwipeNavigator::OnFrameCanGoForwardChanged });
+		return {};
 	}
-	void SwipeNavigator::OnIconModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
+	Windows::UI::Xaml::Controls::Frame SwipeNavigator::Frame(winrt::author::getter)
 	{
-		auto instance = sender.try_as<SwipeNavigation::implementation::SwipeNavigator>();
+		return mFrame;
+	}
+	winrt::author::setter SwipeNavigator::IconMode(author::IconMode mode)
+	{
+		if (mode == IconMode())
+		{
+			return {};
+		}
+		self(this)->SetValue(IconModeProperty(), box_value(std::bit_cast<SwipeNavigation::IconMode>(mode)));
+		return {};
+	}
+	author::IconMode SwipeNavigator::IconMode(winrt::author::getter)
+	{
+		return std::bit_cast<author::IconMode>(unbox_value<SwipeNavigation::IconMode>(self(this)->GetValue(IconModeProperty())));
+	}
+	winrt::author::setter SwipeNavigator::BackNavigationMode(author::NavigationMode mode)
+	{
+		if (mode == BackNavigationMode())
+		{
+			return {};
+		}
+		self(this)->SetValue(BackNavigationModeProperty(), box_value(std::bit_cast<SwipeNavigation::NavigationMode>(mode)));
+		return {};
+	}
+	author::NavigationMode SwipeNavigator::BackNavigationMode(winrt::author::getter)
+	{
+		return std::bit_cast<author::NavigationMode>(unbox_value<SwipeNavigation::NavigationMode>(self(this)->GetValue(BackNavigationModeProperty())));
+	}
+	winrt::author::setter SwipeNavigator::ForwardNavigationMode(author::NavigationMode mode)
+	{
+		if (mode == ForwardNavigationMode())
+		{
+			return {};
+		}
+		self(this)->SetValue(ForwardNavigationModeProperty(), box_value(std::bit_cast<SwipeNavigation::NavigationMode>(mode)));
+		return {};
+	}
+	author::NavigationMode SwipeNavigator::ForwardNavigationMode(winrt::author::getter)
+	{
+		return std::bit_cast<author::NavigationMode>(unbox_value<SwipeNavigation::NavigationMode>(self(this)->GetValue(ForwardNavigationModeProperty())));
+	}
+	winrt::author::setter SwipeNavigator::CanGoBack(bool can)
+	{
+		self(this)->SetValue(CanGoBackProperty(), box_value(can));
+		return {};
+	}
+	bool SwipeNavigator::CanGoBack(winrt::author::getter)
+	{
+		return unbox_value<bool>(self(this)->GetValue(CanGoBackProperty()));
+	}
+	winrt::author::setter SwipeNavigator::CanGoForward(bool can)
+	{
+		self(this)->SetValue(CanGoForwardProperty(), box_value(can));
+		return {};
+	}
+	bool SwipeNavigator::CanGoForward(winrt::author::getter)
+	{
+		return unbox_value<bool>(self(this)->GetValue(CanGoForwardProperty()));
+	}
+	winrt::author::setter SwipeNavigator::RevealWidth(double width)
+	{
+		self(this)->SetValue(RevealWidthProperty(), box_value(width));
+		return {};
+	}
+	double SwipeNavigator::RevealWidth(winrt::author::getter)
+	{
+		return unbox_value<double>(self(this)->GetValue(RevealWidthProperty()));
+	}
+	event_token SwipeNavigator::BackRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler)
+	{
+		return mBackRequested.add(handler);
+	}
+	void SwipeNavigator::BackRequested(event_token token)
+	{
+		mBackRequested.remove(token);
+	}
+	event_token SwipeNavigator::ForwardRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler)
+	{
+		return mForwardRequested.add(handler);
+	}
+	void SwipeNavigator::ForwardRequested(event_token token)
+	{
+		mForwardRequested.remove(token);
+	}
+	void SwipeNavigator::OnIconModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
+	{
+		auto instance = sender.try_as<implementation::SwipeNavigator>();
 		if (instance == nullptr)
 		{
 			return;
@@ -117,27 +212,27 @@ namespace winrt::SwipeNavigation::implementation
 		}
 		instance->UpdateIconMode();
 	}
-	void SwipeNavigator::OnBackNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
+	void SwipeNavigator::OnBackNavigationModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
 	{
-		auto instance = sender.try_as<SwipeNavigation::implementation::SwipeNavigator>();
+		auto instance = sender.try_as<implementation::SwipeNavigator>();
 		if (instance == nullptr)
 		{
 			return;
 		}
 		instance->UpdateCanNavigate();
 	}
-	void SwipeNavigator::OnForwardNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
+	void SwipeNavigator::OnForwardNavigationModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
 	{
-		auto instance = sender.try_as<SwipeNavigation::implementation::SwipeNavigator>();
+		auto instance = sender.try_as<implementation::SwipeNavigator>();
 		if (instance == nullptr)
 		{
 			return;
 		}
 		instance->UpdateCanNavigate();
 	}
-	void SwipeNavigator::OnRevealWidthChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
+	void SwipeNavigator::OnRevealWidthChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args)
 	{
-		auto instance = sender.try_as<SwipeNavigation::implementation::SwipeNavigator>();
+		auto instance = sender.try_as<implementation::SwipeNavigator>();
 		if (instance == nullptr)
 		{
 			return;
@@ -158,7 +253,7 @@ namespace winrt::SwipeNavigation::implementation
 		if (withAnimation)
 		{
 			// Snap back the icon to idle position
-			auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*this).Compositor();
+			auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*self(this)).Compositor();
 			auto anim = compositor.CreateVector3KeyFrameAnimation();
 			auto easing = IconMode() == IconMode::Overlay ? compositor.CreateCubicBezierEasingFunction({ 1.0f, 0.78f }, { 1.0f, 1.0f })
 				: compositor.CreateCubicBezierEasingFunction({ 0.0f, 0.0f }, { 0.0f, 1.0f });
@@ -181,11 +276,11 @@ namespace winrt::SwipeNavigation::implementation
 			mFrame.UnregisterPropertyChangedCallback(wuxc::Frame::CanGoForwardProperty(), mFrameCanGoForwardToken);
 		}
 	}
-	void SwipeNavigator::OnFrameCanGoBackChanged(IInspectable const& sender, wux::DependencyProperty const& args)
+	void SwipeNavigator::OnFrameCanGoBackChanged(wf::IInspectable const& sender, wux::DependencyProperty const& args)
 	{
 		UpdateCanNavigate();
 	}
-	void SwipeNavigator::OnFrameCanGoForwardChanged(IInspectable const& sender, wux::DependencyProperty const& args)
+	void SwipeNavigator::OnFrameCanGoForwardChanged(wf::IInspectable const& sender, wux::DependencyProperty const& args)
 	{
 		UpdateCanNavigate();
 	}
@@ -251,7 +346,8 @@ namespace winrt::SwipeNavigation::implementation
 		{
 			return;
 		}
-		auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*this).Compositor();
+		auto impl = self(this);
+		auto compositor = wuxh::ElementCompositionPreview::GetElementVisual(*impl).Compositor();
 		const auto revealWidth = static_cast<float>(RevealWidth());
 		tracker.MinPosition({ -revealWidth, 0.0f, 0.0f });
 		tracker.MaxPosition({ revealWidth, 0.0f, 0.0f });
@@ -275,11 +371,11 @@ namespace winrt::SwipeNavigation::implementation
 			+ widthStr + L" * (0.5 * (1 - pow((" + widthStr + L" - (-tracker.Position.X > " + widthStr + L" ? " + widthStr + L" : -tracker.Position.X" + L")) / " + widthStr + L", 2))), !tracker.canGoForward ? 0 : -" + widthStr + L"), !tracker.canGoBack ? 0 : " + widthStr + L")";
 		auto anim = compositor.CreateExpressionAnimation(swipeAnimStr);
 		anim.SetReferenceParameter(L"tracker", tracker);
-		auto content = GetTemplatedChild<wux::UIElement>(*this, L"content");
+		auto content = GetTemplatedChild<wux::UIElement>(*impl, L"content");
 		auto contentVisual = wuxh::ElementCompositionPreview::GetElementVisual(content);
-		auto overlayBackIcon = GetTemplatedChild<wux::UIElement>(*this, L"overlayBackIcon");
+		auto overlayBackIcon = GetTemplatedChild<wux::UIElement>(*impl, L"overlayBackIcon");
 		auto overlayBackIconVisual = wuxh::ElementCompositionPreview::GetElementVisual(overlayBackIcon);
-		auto overlayForwardIcon = GetTemplatedChild<wux::UIElement>(*this, L"overlayForwardIcon");
+		auto overlayForwardIcon = GetTemplatedChild<wux::UIElement>(*impl, L"overlayForwardIcon");
 		auto overlayForwardIconVisual = wuxh::ElementCompositionPreview::GetElementVisual(overlayForwardIcon);
 		if (IconMode() == IconMode::BackDrop)
 		{
@@ -332,7 +428,7 @@ namespace winrt::SwipeNavigation::implementation
 		}
 	}
 	template<typename Func>
-	void implementation::SwipeNavigator::Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> &ev, bool canNavigate, Func&& navigate)
+	void author::SwipeNavigator::Navigate(event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> &ev, bool canNavigate, Func&& navigate)
 	{
 		auto iconMode = IconMode();
 		// If we are in overlay mode, animate back to idle regardless of Handled
@@ -345,8 +441,8 @@ namespace winrt::SwipeNavigation::implementation
 		{
 			return;
 		}
-		auto args{ make_self<NavigationRequestedEventArgs>() };
-		ev(*this, *args);
+		auto args{ make_self<implementation::NavigationRequestedEventArgs>() };
+		ev(*self(this), *args);
 		if (args->Handled())
 		{
 			// If we are in backdrop mode, animate back to idle position, otherwise the backdrop would stay visible.
@@ -358,7 +454,7 @@ namespace winrt::SwipeNavigation::implementation
 		}
 		navigate();
 	}
-	void implementation::SwipeNavigator::GoBack()
+	void author::SwipeNavigator::GoBack()
 	{
 		Navigate(mBackRequested, CanGoBack(), [this]()
 			{
@@ -390,7 +486,7 @@ namespace winrt::SwipeNavigation::implementation
 		properties.InsertBoolean(propCanGoBack, CanGoBack());
 		properties.InsertBoolean(propCanGoForward, CanGoForward());
 	}
-	void SwipeNavigator::OnLoaded(IInspectable const& sender, wux::RoutedEventArgs const& args)
+	void SwipeNavigator::OnLoaded(wf::IInspectable const& sender, wux::RoutedEventArgs const& args)
 	{
 		auto& tracker = mTracker;
 		if (tracker == nullptr)
@@ -400,11 +496,11 @@ namespace winrt::SwipeNavigation::implementation
 		tracker.TryUpdatePosition({});
 		ResetTrackerProperties(tracker.Properties());
 	}
-	void implementation::SwipeNavigator::OnSystemBackRequested(IInspectable const&, wu::Core::BackRequestedEventArgs const&)
+	void SwipeNavigator::OnSystemBackRequested(wf::IInspectable const&, wu::Core::BackRequestedEventArgs const&)
 	{
 		GoBack();
 	}
-	void SwipeNavigator::OnRootPointerPressed(IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args)
+	void SwipeNavigator::OnRootPointerPressed(wf::IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args)
 	{
 		if (args.Pointer().PointerDeviceType() != wdi::PointerDeviceType::Touch)
 		{
@@ -416,7 +512,7 @@ namespace winrt::SwipeNavigation::implementation
 		}
 		mSource.TryRedirectForManipulation(args.GetCurrentPoint(mRoot));
 	}
-	void SwipeNavigator::OnRootSizeChanged(IInspectable const& sender, wux::SizeChangedEventArgs const& args)
+	void SwipeNavigator::OnRootSizeChanged(wf::IInspectable const& sender, wux::SizeChangedEventArgs const& args)
 	{
 		auto setClip = [&](wuxm::RectangleGeometry const& clip)
 		{
@@ -428,37 +524,37 @@ namespace winrt::SwipeNavigation::implementation
 		setClip(mBackDropClip);
 		setClip(mOverlayClip);
 	}
-	wux::DependencyProperty SwipeNavigator::IconModeProperty()
+	wux::DependencyProperty SwipeNavigator::IconModeProperty(winrt::author::getter)
 	{
 		static auto prop = wux::DependencyProperty::Register(
 			L"IconMode",
 			xaml_typename<SwipeNavigation::IconMode>(),
 			xaml_typename<SwipeNavigation::SwipeNavigator>(),
-			wux::PropertyMetadata{ box_value<SwipeNavigation::IconMode>(IconMode::BackDrop), SwipeNavigator::OnIconModeChanged }
+			wux::PropertyMetadata{ box_value(std::bit_cast<SwipeNavigation::IconMode>(IconMode::BackDrop)), SwipeNavigator::OnIconModeChanged }
 		);
 		return prop;
 	}
-	wux::DependencyProperty SwipeNavigator::BackNavigationModeProperty()
+	wux::DependencyProperty SwipeNavigator::BackNavigationModeProperty(winrt::author::getter)
 	{
 		static auto prop = wux::DependencyProperty::Register(
 			L"BackNavigationMode",
 			xaml_typename<SwipeNavigation::NavigationMode>(),
 			xaml_typename<SwipeNavigation::SwipeNavigator>(),
-			wux::PropertyMetadata{ box_value<SwipeNavigation::NavigationMode>(NavigationMode::Auto), SwipeNavigator::OnBackNavigationModeChanged }
+			wux::PropertyMetadata{ box_value(std::bit_cast<SwipeNavigation::NavigationMode>(NavigationMode::Auto)), SwipeNavigator::OnBackNavigationModeChanged }
 		);
 		return prop;
 	}
-	wux::DependencyProperty SwipeNavigator::ForwardNavigationModeProperty()
+	wux::DependencyProperty SwipeNavigator::ForwardNavigationModeProperty(winrt::author::getter)
 	{
 		static auto prop = wux::DependencyProperty::Register(
 			L"ForwardNavigationMode",
 			xaml_typename<SwipeNavigation::NavigationMode>(),
 			xaml_typename<SwipeNavigation::SwipeNavigator>(),
-			wux::PropertyMetadata{ box_value<SwipeNavigation::NavigationMode>(NavigationMode::Auto), SwipeNavigator::OnForwardNavigationModeChanged }
+			wux::PropertyMetadata{ box_value(std::bit_cast<SwipeNavigation::NavigationMode>(NavigationMode::Auto)), SwipeNavigator::OnForwardNavigationModeChanged }
 		);
 		return prop;
 	}
-	Windows::UI::Xaml::DependencyProperty SwipeNavigator::CanGoBackProperty()
+	Windows::UI::Xaml::DependencyProperty SwipeNavigator::CanGoBackProperty(winrt::author::getter)
 	{
 		static auto prop = wux::DependencyProperty::Register(
 			L"CanGoBack",
@@ -468,7 +564,7 @@ namespace winrt::SwipeNavigation::implementation
 		);
 		return prop;
 	}
-	Windows::UI::Xaml::DependencyProperty SwipeNavigator::CanGoForwardProperty()
+	Windows::UI::Xaml::DependencyProperty SwipeNavigator::CanGoForwardProperty(winrt::author::getter)
 	{
 		static auto prop = wux::DependencyProperty::Register(
 			L"CanGoForward",
@@ -478,7 +574,7 @@ namespace winrt::SwipeNavigation::implementation
 		);
 		return prop;
 	}
-	wux::DependencyProperty SwipeNavigator::RevealWidthProperty()
+	wux::DependencyProperty SwipeNavigator::RevealWidthProperty(winrt::author::getter)
 	{
 		constexpr auto defaultRevealWidth = 300.0;
 		static auto prop = wux::DependencyProperty::Register(
@@ -502,14 +598,14 @@ namespace winrt::SwipeNavigation::implementation
 		}
 		return nullptr;
 	}
-	void implementation::SwipeNavigator::OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const&)
+	void SwipeNavigator::OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const&, winrt::author::override)
 	{
 		GoBack();
 	}
-	void SwipeNavigator::CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args)
+	void SwipeNavigator::CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args, winrt::author::ignore)
 	{
 	}
-	void SwipeNavigator::IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args)
+	void SwipeNavigator::IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args, winrt::author::ignore)
 	{
 		auto position = sender.Position().x;
 		mState = position == 0.0f
@@ -529,7 +625,7 @@ namespace winrt::SwipeNavigation::implementation
 			}
 		}
 	}
-	void SwipeNavigator::InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args)
+	void SwipeNavigator::InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args, winrt::author::ignore)
 	{
 		auto restingPosition = args.ModifiedRestingPosition().Value();
 		if (restingPosition.x == 0.0f)
@@ -552,14 +648,14 @@ namespace winrt::SwipeNavigation::implementation
 			GoForward();
 		}
 	}
-	void SwipeNavigator::InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args)
+	void SwipeNavigator::InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args, winrt::author::ignore)
 	{
 		mState = State::Idle;
 	}
-	void SwipeNavigator::RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args)
+	void SwipeNavigator::RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args, winrt::author::ignore)
 	{
 	}
-	void SwipeNavigator::ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args)
+	void SwipeNavigator::ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args, winrt::author::ignore)
 	{
 	}
 }

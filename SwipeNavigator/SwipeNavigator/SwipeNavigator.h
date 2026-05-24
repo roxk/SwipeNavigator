@@ -1,18 +1,34 @@
 ﻿#pragma once
 
-#include "pch.h"
+#include "ns.h"
+#include <winrt/author/base.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Composition.Interactions.h>
 #include "NavigationRequestedEventArgs.h"
-#include "SwipeNavigator.g.h"
 #include <optional>
 
-//
-//
-namespace winrt::SwipeNavigation::implementation
+namespace winrt::SwipeNavigation
 {
-    struct
-    [[clang::annotate("idlgen::import=IconMode.idl,NavigationMode.idl")]]
-    [[clang::annotate("idlgen::extend=Windows.UI.Xaml.Controls.ContentControl")]]
-    SwipeNavigator : SwipeNavigatorT<SwipeNavigator, wuci::IInteractionTrackerOwner>, idlgen::base<wuxc::ContentControl>
+    struct SwipeNavigator;
+    struct NavigationRequestedEventArgs;
+}
+
+namespace winrt::SwipeNavigation::author
+{
+    enum class IconMode : int
+    {
+        BackDrop,
+        Overlay
+    };
+
+    enum class NavigationMode: int
+    {
+        Auto,
+        Disabled,
+        Enabled
+    };
+
+    struct SwipeNavigator : winrt::author::runtimeclass<wuxc::ContentControl, winrt::author::internal<wuci::IInteractionTrackerOwner>>
     {
         enum class State
         {
@@ -27,134 +43,44 @@ namespace winrt::SwipeNavigation::implementation
 
         SwipeNavigator();
         ~SwipeNavigator();
-        [[clang::annotate("idlgen::hide")]]
-        void OnApplyTemplate();
-        [[clang::annotate("idlgen::setter")]]
-        void Frame(Windows::UI::Xaml::Controls::Frame const& frame);
-        [[clang::annotate("idlgen::getter")]]
-        Windows::UI::Xaml::Controls::Frame Frame()
-        {
-            return mFrame;
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void IconMode(SwipeNavigation::IconMode mode)
-        {
-            if (mode == IconMode())
-            {
-                return;
-            }
-            SetValue(IconModeProperty(), box_value(mode));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        SwipeNavigation::IconMode IconMode()
-        {
-            return unbox_value<SwipeNavigation::IconMode>(GetValue(IconModeProperty()));
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void BackNavigationMode(SwipeNavigation::NavigationMode mode)
-        {
-            if (mode == BackNavigationMode())
-            {
-                return;
-            }
-            SetValue(BackNavigationModeProperty(), box_value(mode));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        SwipeNavigation::NavigationMode BackNavigationMode()
-        {
-            return unbox_value<SwipeNavigation::NavigationMode>(GetValue(BackNavigationModeProperty()));
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void ForwardNavigationMode(SwipeNavigation::NavigationMode mode)
-        {
-            if (mode == ForwardNavigationMode())
-            {
-                return;
-            }
-            SetValue(ForwardNavigationModeProperty(), box_value(mode));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        SwipeNavigation::NavigationMode ForwardNavigationMode()
-        {
-            return unbox_value<SwipeNavigation::NavigationMode>(GetValue(ForwardNavigationModeProperty()));
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void CanGoBack(bool can)
-        {
-            SetValue(CanGoBackProperty(), box_value(can));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        bool CanGoBack()
-        {
-            return unbox_value<bool>(GetValue(CanGoBackProperty()));
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void CanGoForward(bool can)
-        {
-            SetValue(CanGoForwardProperty(), box_value(can));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        bool CanGoForward()
-        {
-            return unbox_value<bool>(GetValue(CanGoForwardProperty()));
-        }
-        [[clang::annotate("idlgen::setter")]]
-        void RevealWidth(double width)
-        {
-            SetValue(RevealWidthProperty(), box_value(width));
-        }
-        [[clang::annotate("idlgen::getter")]]
-        double RevealWidth()
-        {
-            return unbox_value<double>(GetValue(RevealWidthProperty()));
-        }
-        event_token BackRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler)
-        {
-            return mBackRequested.add(handler);
-        }
-        void BackRequested(event_token token)
-        {
-            mBackRequested.remove(token);
-        }
-        event_token ForwardRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler)
-        {
-            return mForwardRequested.add(handler);
-        }
-        void ForwardRequested(event_token token)
-        {
-            mForwardRequested.remove(token);
-        }
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty IconModeProperty();
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty BackNavigationModeProperty();
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty ForwardNavigationModeProperty();
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty CanGoBackProperty();
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty CanGoForwardProperty();
-        [[clang::annotate("idlgen::getter")]]
-        static Windows::UI::Xaml::DependencyProperty RevealWidthProperty();
-        static Windows::UI::Xaml::Visibility BackDropIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::BackDrop ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
-        static Windows::UI::Xaml::Visibility OverlayIconVisibility(SwipeNavigation::IconMode mode) { return mode == SwipeNavigation::IconMode::Overlay ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
+        void InitializeComponent(winrt::author::ignore = {});
+        void OnApplyTemplate(winrt::author::override = {});
+        winrt::author::setter Frame(Windows::UI::Xaml::Controls::Frame const& frame);
+        Windows::UI::Xaml::Controls::Frame Frame(winrt::author::getter = {});
+        winrt::author::setter IconMode(author::IconMode mode);
+        author::IconMode IconMode(winrt::author::getter = {});
+        winrt::author::setter BackNavigationMode(author::NavigationMode mode);
+        author::NavigationMode BackNavigationMode(winrt::author::getter = {});
+        winrt::author::setter ForwardNavigationMode(author::NavigationMode mode);
+        author::NavigationMode ForwardNavigationMode(winrt::author::getter = {});
+        winrt::author::setter CanGoBack(bool can);
+        bool CanGoBack(winrt::author::getter = {});
+        winrt::author::setter CanGoForward(bool can);
+        bool CanGoForward(winrt::author::getter = {});
+        winrt::author::setter RevealWidth(double width);
+        double RevealWidth(winrt::author::getter = {});
+        event_token BackRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler);
+        void BackRequested(event_token token);
+        event_token ForwardRequested(wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs> const& handler);
+        void ForwardRequested(event_token token);
+        static Windows::UI::Xaml::DependencyProperty IconModeProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::DependencyProperty BackNavigationModeProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::DependencyProperty ForwardNavigationModeProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::DependencyProperty CanGoBackProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::DependencyProperty CanGoForwardProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::DependencyProperty RevealWidthProperty(winrt::author::getter = {});
+        static Windows::UI::Xaml::Visibility BackDropIconVisibility(author::IconMode mode) { return mode == author::IconMode::BackDrop ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
+        static Windows::UI::Xaml::Visibility OverlayIconVisibility(author::IconMode mode) { return mode == author::IconMode::Overlay ? wux::Visibility::Visible : wux::Visibility::Collapsed; }
         static SwipeNavigation::SwipeNavigator Find(Windows::UI::Xaml::FrameworkElement const& element);
         void Close() { Close(true); }
         void Close(bool withAnimation);
-        [[clang::annotate("idlgen::hide")]]
-        void OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args);
-        [[clang::annotate("idlgen::hide")]]
-        void ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args);
+        void OnKeyboardAcceleratorInvoked(wuxi::KeyboardAcceleratorInvokedEventArgs const& args, winrt::author::override = {});
+        void CustomAnimationStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerCustomAnimationStateEnteredArgs const& args, winrt::author::ignore = {});
+        void IdleStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerIdleStateEnteredArgs const& args, winrt::author::ignore = {});
+        void InertiaStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInertiaStateEnteredArgs const& args, winrt::author::ignore = {});
+        void InteractingStateEntered(wuci::InteractionTracker const& sender, wuci::InteractionTrackerInteractingStateEnteredArgs const& args, winrt::author::ignore = {});
+        void RequestIgnored(wuci::InteractionTracker const& sender, wuci::InteractionTrackerRequestIgnoredArgs const& args, winrt::author::ignore = {});
+        void ValuesChanged(wuci::InteractionTracker const& sender, wuci::InteractionTrackerValuesChangedArgs const& args, winrt::author::ignore = {});
     private:
         wuci::VisualInteractionSource mSource{ nullptr };
         wuci::InteractionTracker mTracker{ nullptr };
@@ -167,13 +93,13 @@ namespace winrt::SwipeNavigation::implementation
         State mState{ State::Idle };
         int64_t mFrameCanGoBackToken{};
         int64_t mFrameCanGoForwardToken{};
-        static void OnIconModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
-        static void OnBackNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
-        static void OnForwardNavigationModeChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
-        static void OnRevealWidthChanged(IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
+        static void OnIconModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
+        static void OnBackNavigationModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
+        static void OnForwardNavigationModeChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
+        static void OnRevealWidthChanged(wf::IInspectable const& sender, wux::DependencyPropertyChangedEventArgs const& args);
         void TryUnregisterFrameCallbacks();
-        void OnFrameCanGoBackChanged(IInspectable const& sender, wux::DependencyProperty const& args);
-        void OnFrameCanGoForwardChanged(IInspectable const& sender, wux::DependencyProperty const& args);
+        void OnFrameCanGoBackChanged(wf::IInspectable const& sender, wux::DependencyProperty const& args);
+        void OnFrameCanGoForwardChanged(wf::IInspectable const& sender, wux::DependencyProperty const& args);
         void Update();
         void UpdateCanNavigate();
         void UpdateIconMode();
@@ -183,18 +109,12 @@ namespace winrt::SwipeNavigation::implementation
         void GoBack();
         void GoForward();
         void ResetTrackerProperties(wuc::CompositionPropertySet const& properties);
-        void OnLoaded(IInspectable const& sender, wux::RoutedEventArgs const& args);
-        void OnSystemBackRequested(IInspectable const& sender, wu::Core::BackRequestedEventArgs const& args);
-        void OnRootPointerPressed(IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args);
-        void OnRootSizeChanged(IInspectable const& sender, wux::SizeChangedEventArgs const& args);
+        void OnLoaded(wf::IInspectable const& sender, wux::RoutedEventArgs const& args);
+        void OnSystemBackRequested(wf::IInspectable const& sender, wu::Core::BackRequestedEventArgs const& args);
+        void OnRootPointerPressed(wf::IInspectable const& sender, wuxi::PointerRoutedEventArgs const& args);
+        void OnRootSizeChanged(wf::IInspectable const& sender, wux::SizeChangedEventArgs const& args);
         wuxc::Frame mFrame;
         event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> mBackRequested;
         event<wf::TypedEventHandler<SwipeNavigation::SwipeNavigator, SwipeNavigation::NavigationRequestedEventArgs>> mForwardRequested;
-    };
-}
-namespace winrt::SwipeNavigation::factory_implementation
-{
-    struct SwipeNavigator : SwipeNavigatorT<SwipeNavigator, implementation::SwipeNavigator>
-    {
     };
 }

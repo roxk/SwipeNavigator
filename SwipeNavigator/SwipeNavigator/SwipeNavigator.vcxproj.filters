@@ -14,16 +14,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="NavigationRequestedEventArgs.cpp" />
+    <ClCompile Include="SwipeNavigator.cpp" />
+    <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="SwipeNavigatorTemplate.cpp" />
+    <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="Generated Files\module.g.cpp" />
+    <ClCompile Include="$(OutputImplCpp)" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="SwipeNavigator.idl" />
-    <Midl Include="NavigationRequestedEventArgs.idl" />
-    <Midl Include="IconMode.idl" />
-    <Midl Include="NavigationMode.idl" />
+    <ClInclude Include="ns.h" />
+    <ClInclude Include="NavigationRequestedEventArgs.author.h" />
+    <ClInclude Include="SwipeNavigator.author.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SwipeNavigator.def" />
@@ -33,7 +39,7 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SwipeNavigatorTemplate.xaml" />
+    <Page Include="SwipeNavigatorTemplate.author.xaml" />
     <Page Include="Themes\Generic.xaml">
       <Filter>Themes</Filter>
     </Page>
