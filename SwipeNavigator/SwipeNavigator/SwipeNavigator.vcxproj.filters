@@ -24,12 +24,13 @@
     <ClCompile Include="$(OutputImplCpp)" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="$(OutputImplCpp)" />
+    <ClCompile Include="$(OutputImplCpp)" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="ns.h" />
-    <ClInclude Include="NavigationRequestedEventArgs.author.h" />
-    <ClInclude Include="SwipeNavigator.author.h" />
+    <ClInclude Include="NavigationRequestedEventArgs.h" />
+    <ClInclude Include="SwipeNavigator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SwipeNavigator.def" />
@@ -39,9 +40,9 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SwipeNavigatorTemplate.author.xaml" />
     <Page Include="Themes\Generic.xaml">
       <Filter>Themes</Filter>
     </Page>
+    <Page Include="SwipeNavigatorTemplate.xaml" />
   </ItemGroup>
 </Project>
